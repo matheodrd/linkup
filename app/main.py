@@ -1,9 +1,17 @@
 from typing import Dict
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 import uvicorn
 
-app = FastAPI(title="Link Up")
+from database_setup import create_db_and_tables
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_db_and_tables()
+    yield
+
+app = FastAPI(title="Link Up", lifespan=lifespan)
 
 @app.get("/")
 async def index() -> Dict[str, str]:
