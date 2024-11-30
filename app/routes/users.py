@@ -1,7 +1,7 @@
 from typing import Sequence, Dict
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 from sqlmodel import Session, select
 
 from models.users import User, UserPublic, UserCreate, UserUpdate
@@ -9,7 +9,7 @@ from database import engine
 
 router = APIRouter()
 
-@router.post("/users", response_model=UserPublic)
+@router.post("/users", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate) -> User:
     with Session(engine) as session:
         db_user = User.model_validate(user)
@@ -45,12 +45,11 @@ def update_user(user_id: UUID, user: UserUpdate) -> User:
         session.refresh(db_user)
         return db_user
 
-@router.delete("/users/{user_id}")
-def delete_user(user_id: UUID) -> Dict[str, str]:
+@router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id: UUID) -> None:
     with Session(engine) as session:
         user = session.get(User, user_id)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         session.delete(user)
         session.commit()
-        return {"message": f"User with ID {user_id} ('{user.username}') deleted successfully"}
