@@ -1,5 +1,7 @@
+from typing import Sequence
+
 from fastapi import APIRouter
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from models.users import User, UserRead, UserCreate
 from database import engine
@@ -14,3 +16,8 @@ def create_user(user: UserCreate) -> User:
         session.commit()
         session.refresh(db_user)
         return db_user
+
+@router.get("/users", response_model=Sequence[UserRead])
+def read_users() -> Sequence[User]:
+    with Session(engine) as session:
+        return session.exec(select(User)).all()
