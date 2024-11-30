@@ -12,6 +12,12 @@ router = APIRouter()
 @router.post("/users", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate) -> User:
     with Session(engine) as session:
+        # Check username and e-mail address uniqueness
+        if session.exec(select(User).where(User.email == user.email)).first():
+            raise HTTPException(status_code=400, detail="Email already in use")
+        if session.exec(select(User).where(User.username == user.username)).first():
+            raise HTTPException(status_code=400, detail="Username already in use")
+
         db_user = User.model_validate(user)
         session.add(db_user)
         session.commit()
@@ -37,7 +43,13 @@ def update_user(user_id: UUID, user: UserUpdate) -> User:
         db_user = session.get(User, user_id)
         if not db_user:
             raise HTTPException(status_code=404, detail="User not found")
-        print(user_id)
+
+        # Check username and e-mail address uniqueness
+        if user.email and session.exec(select(User).where(User.email == user.email, User.id != user_id)).first():
+            raise HTTPException(status_code=400, detail="Email already in use")
+        if user.username and session.exec(select(User).where(User.username == user.username, User.id != user_id)).first():
+            raise HTTPException(status_code=400, detail="Username already in use")
+
         user_data = user.model_dump(exclude_unset=True)
         db_user.sqlmodel_update(user_data)
         session.add(db_user)
