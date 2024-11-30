@@ -16,8 +16,5 @@ class UserUpdate(SQLModel):
     email: str | None = None
     username: str | None = None
 
-class UserDelete(UserBase):
-    id: uuid.UUID
-
 class UserPublic(UserBase):
     id: uuid.UUID
