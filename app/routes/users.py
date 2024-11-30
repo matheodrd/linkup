@@ -4,7 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 
-from models.users import User, UserPublic, UserCreate
+from models.users import User, UserPublic, UserCreate, UserUpdate
 from database import engine
 
 router = APIRouter()
@@ -30,3 +30,17 @@ def read_user(user_id: UUID) -> User:
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return user
+
+@router.patch("/users/{user_id}", response_model=UserPublic)
+def update_user(user_id: UUID, user: UserUpdate) -> User:
+    with Session(engine) as session:
+        db_user = session.get(User, user_id)
+        if not db_user:
+            raise HTTPException(status_code=404, detail="User not found")
+        print(user_id)
+        user_data = user.model_dump(exclude_unset=True)
+        db_user.sqlmodel_update(user_data)
+        session.add(db_user)
+        session.commit()
+        session.refresh(db_user)
+        return db_user
