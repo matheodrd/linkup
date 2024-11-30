@@ -1,6 +1,7 @@
 from typing import Sequence
+from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 
 from models.users import User, UserRead, UserCreate
@@ -21,3 +22,11 @@ def create_user(user: UserCreate) -> User:
 def read_users() -> Sequence[User]:
     with Session(engine) as session:
         return session.exec(select(User)).all()
+
+@router.get("/users/{user_id}", response_model=UserRead)
+def read_user(user_id: UUID) -> User:
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user
