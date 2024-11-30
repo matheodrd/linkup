@@ -9,11 +9,6 @@ erDiagram
         STRING email
         STRING username
         STRING azure_id
-    }
-
-    PROFILE {
-        INT id PK
-        INT user_id FK
         STRING bio
         STRING profile_picture
         BOOLEAN is_private
@@ -45,7 +40,6 @@ erDiagram
         DATE created_at
     }
 
-    USER ||--|| PROFILE : "has"
     USER ||--o{ POST : "creates"
     POST ||--o{ MEDIA : "includes"
     POST ||--o{ COMMENT : "has"

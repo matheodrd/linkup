@@ -1,10 +1,15 @@
-from typing import Sequence, Dict
+from typing import Sequence
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import Session, select
 
-from models.users import User, UserPublic, UserCreate, UserUpdate
+from models.users import (
+    User,
+    UserPublic,
+    UserCreate,
+    UserUpdate,
+)
 from database import engine
 
 router = APIRouter()
