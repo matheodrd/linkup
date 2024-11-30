@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Sequence, Dict
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException
@@ -44,3 +44,13 @@ def update_user(user_id: UUID, user: UserUpdate) -> User:
         session.commit()
         session.refresh(db_user)
         return db_user
+
+@router.delete("/users/{user_id}")
+def delete_user(user_id: UUID) -> Dict[str, str]:
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        session.delete(user)
+        session.commit()
+        return {"message": f"User with ID {user_id} ('{user.username}') deleted successfully"}
