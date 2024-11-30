@@ -1,4 +1,3 @@
-from __future__ import annotations
 import uuid
 
 from sqlmodel import SQLModel, Field
