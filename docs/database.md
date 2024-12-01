@@ -17,11 +17,9 @@ erDiagram
     POST {
         INT id PK
         INT user_id FK
-        STRING title
         TEXT content
         DATE created_at
         DATE updated_at
-        BOOLEAN is_published
     }
 
     MEDIA {
