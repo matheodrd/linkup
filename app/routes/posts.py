@@ -56,3 +56,12 @@ def update_post(post_id: UUID, post: PostUpdate) -> Post:
         session.commit()
         session.refresh(db_post)
         return db_post
+
+@router.delete("/posts/{post_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(post_id: UUID) -> None:
+    with Session(engine) as session:
+        post = session.get(Post, post_id)
+        if not post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        session.delete(post)
+        session.commit()
