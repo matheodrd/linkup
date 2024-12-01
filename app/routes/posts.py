@@ -1,4 +1,5 @@
 from typing import Sequence
+from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import Session, select
@@ -29,3 +30,11 @@ def create_post(post: PostCreate) -> Post:
 def read_posts() -> Sequence[Post]:
     with Session(engine) as session:
         return session.exec(select(Post)).all()
+
+@router.get("/posts/{post_id}", response_model=PostPublic)
+def read_post(post_id: UUID) -> Post:
+    with Session(engine) as session:
+        post = session.get(Post, post_id)
+        if not post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        return post
