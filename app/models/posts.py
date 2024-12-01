@@ -18,7 +18,6 @@ class PostCreate(SQLModel):
 
 class PostUpdate(SQLModel):
     content: str | None = None
-    updated_at: datetime = Field(default_factory=datetime.now)
 
 class PostPublic(PostBase):
     id: uuid.UUID

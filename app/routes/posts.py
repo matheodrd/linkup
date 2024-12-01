@@ -1,5 +1,6 @@
 from typing import Sequence
 from uuid import UUID
+from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import Session, select
@@ -7,6 +8,7 @@ from sqlmodel import Session, select
 from models.posts import (
     Post,
     PostCreate,
+    PostUpdate,
     PostPublic,
 )
 from models.users import User
@@ -38,3 +40,19 @@ def read_post(post_id: UUID) -> Post:
         if not post:
             raise HTTPException(status_code=404, detail="Post not found")
         return post
+
+@router.patch("/posts/{post_id}", response_model=PostPublic)
+def update_post(post_id: UUID, post: PostUpdate) -> Post:
+    with Session(engine) as session:
+        db_post = session.get(Post, post_id)
+        if not db_post:
+            raise HTTPException(status_code=404, detail="Post not found")
+
+        db_post.updated_at = datetime.now()
+
+        post_data = post.model_dump(exclude_unset=True)
+        db_post.sqlmodel_update(post_data)
+        session.add(db_post)
+        session.commit()
+        session.refresh(db_post)
+        return db_post
