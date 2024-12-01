@@ -10,6 +10,7 @@ from models.users import (
     UserCreate,
     UserUpdate,
 )
+from models.posts import Post, PostPublic
 from database import engine
 
 router = APIRouter()
@@ -41,6 +42,18 @@ def read_user(user_id: UUID) -> User:
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return user
+
+@router.get("/users/{user_id}/posts", response_model=Sequence[PostPublic])
+def read_user_posts(user_id: UUID) -> Sequence[Post]:
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        statement = select(Post).where(Post.user_id == user_id)
+        user_posts = session.exec(statement).all()
+
+        return user_posts
 
 @router.patch("/users/{user_id}", response_model=UserPublic)
 def update_user(user_id: UUID, user: UserUpdate) -> User:
