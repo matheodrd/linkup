@@ -1,5 +1,7 @@
+from typing import Sequence
+
 from fastapi import APIRouter, HTTPException, status
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from models.posts import (
     Post,
@@ -22,3 +24,8 @@ def create_post(post: PostCreate) -> Post:
         session.commit()
         session.refresh(db_post)
         return db_post
+
+@router.get("/posts", response_model=Sequence[PostPublic])
+def read_posts() -> Sequence[Post]:
+    with Session(engine) as session:
+        return session.exec(select(Post)).all()
