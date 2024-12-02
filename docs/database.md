@@ -27,7 +27,6 @@ erDiagram
         UUID post_id FK
         STRING media_url
         STRING media_type
-        DATE created_at
     }
 
     COMMENT {
