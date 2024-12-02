@@ -18,7 +18,7 @@ class UserCreate(SQLModel):
 
 class UserUpdate(SQLModel):
     email: str | None = None
-    username: str | None = None
+    username: str | None = Field(default=None, min_length=3, max_length=50)
     bio: str | None = None
     profile_picture: str | None = None
     is_private: bool | None = None
