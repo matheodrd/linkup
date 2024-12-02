@@ -5,7 +5,7 @@
 ```mermaid
 erDiagram
     USER {
-        INT id PK
+        UUID id PK
         STRING email
         STRING username
         STRING azure_id
@@ -15,25 +15,25 @@ erDiagram
     }
 
     POST {
-        INT id PK
-        INT user_id FK
+        UUID id PK
+        UUID user_id FK
         TEXT content
         DATE created_at
         DATE updated_at
     }
 
     MEDIA {
-        INT id PK
-        INT post_id FK
+        UUID id PK
+        UUID post_id FK
         STRING media_url
         STRING media_type
         DATE created_at
     }
 
     COMMENT {
-        INT id PK
-        INT post_id FK
-        INT user_id FK
+        UUID id PK
+        UUID post_id FK
+        UUID user_id FK
         TEXT content
         DATE created_at
     }
