@@ -6,6 +6,7 @@ import uvicorn
 
 from database_setup import create_db_and_tables
 from routes.users import router as user_router
+from routes.posts import router as post_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -15,6 +16,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Link Up", lifespan=lifespan)
 
 app.include_router(user_router)
+app.include_router(post_router)
 
 @app.get("/")
 async def index() -> Dict[str, str]:
