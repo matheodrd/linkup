@@ -1,7 +1,10 @@
 import uuid
+from typing import List
 from datetime import datetime
 
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
+
+from models.medias import Media, MediaPublic
 
 class PostBase(SQLModel):
     content: str = Field(max_length=2200)
@@ -11,6 +14,7 @@ class PostBase(SQLModel):
 class Post(PostBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     user_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)
+    medias: List[Media] = Relationship(back_populates="post")
 
 class PostCreate(SQLModel):
     content: str = Field(max_length=2200)
@@ -22,3 +26,4 @@ class PostUpdate(SQLModel):
 class PostPublic(PostBase):
     id: uuid.UUID
     user_id: uuid.UUID
+    medias: List[MediaPublic]
