@@ -1,7 +1,9 @@
+import os
 from typing import Dict
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 from database_setup import create_db_and_tables
@@ -14,6 +16,9 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="Link Up", lifespan=lifespan)
+
+if not os.getenv("ENVIRONMENT") == "production":
+    app.mount("/static/medias", StaticFiles(directory="static/medias"), name="medias")
 
 app.include_router(user_router)
 app.include_router(post_router)
