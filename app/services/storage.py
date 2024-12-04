@@ -80,6 +80,6 @@ def get_storage_provider() -> StorageProvider:
         )
     else:
         return LocalStorage(
-            base_path="static/media",
-            base_url="http://127.0.0.1:8000/medias"
+            base_path="static/medias",
+            base_url="http://127.0.0.1:8000/static/medias"
         )
