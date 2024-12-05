@@ -28,14 +28,6 @@ erDiagram
         STRING media_type
     }
 
-    COMMENT {
-        UUID id PK
-        UUID post_id FK
-        UUID user_id FK
-        TEXT content
-        DATE created_at
-    }
-
     USER ||--o{ POST : "creates"
     POST ||--o{ MEDIA : "includes"
 ```
