@@ -11,6 +11,35 @@ Link Up est une plateforme de réseaux sociaux qui vise à être un système bac
 * Gestion des posts
   * Possibilité d'ajouter des médias (images, GIFs et vidéos)
 
+## Installation locale
+
+Pour développer le projet en local, suivre les étapes suivantes :
+
+1. Cloner le repo Git :
+
+```bash
+git clone https://github.com/matheodrd/linkup.git
+cd linkup
+```
+
+2. Créer et activer un environnement virtuel Python :
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+```
+
+3. Installer les dépendances :
+
+```bash
+pip3.12 install -r requirements.txt
+```
+
+4. Démarrer l'application :
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8080
+```
+
 ## Reference API
 
 ### Endpoints
