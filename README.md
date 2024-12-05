@@ -5,6 +5,12 @@
 
 Link Up est une plateforme de réseaux sociaux qui vise à être un système backend évolutif et efficace pouvant être intégré à n'importe quelle interface frontend, offrant une expérience de gestion de contenu transparente.
 
+## Equipe
+
+* Alexis PECATE
+* Lucas BIHEL
+* Mathéo DURAND
+
 ## Fonctionnalités
 
 * Gestion des utilisateurs
