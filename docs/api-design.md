@@ -63,3 +63,32 @@ Le verbe PATCH est utilisé pour mettre à jour partiellement une ressource exis
 Le verbe DELETE est utilisé pour supprimer une ressource existante. Par exemple :
 - **DELETE /users/{user_id}** : Supprime un utilisateur spécifique.
 - **DELETE /posts/{post_id}** : Supprime un post spécifique.
+
+## Paramètres des requêtes
+
+### Format des paramètres de requête
+
+Les paramètres de requête sont utilisés pour passer des informations supplémentaires à une requête HTTP. Ils peuvent être inclus dans l'URL, dans le corps de la requête ou dans les en-têtes HTTP. Dans notre API, nous utilisons principalement les paramètres suivants :
+
+#### Paramètres d'URL
+
+Les paramètres d'URL sont inclus directement dans l'URL et sont utilisés pour identifier des ressources spécifiques. Par exemple :
+- **GET /posts/{post_id}** : Récupère les informations d'un post spécifique en utilisant son `post_id`.
+- **PATCH /posts/{post_id}** : Met à jour les informations d'un post spécifique en utilisant son `post_id`.
+- **DELETE /posts/{post_id}** : Supprime un post spécifique en utilisant son `post_id`.
+
+#### Paramètres de formulaire
+
+Les paramètres de formulaire sont envoyés dans le corps de la requête et sont utilisés pour créer ou mettre à jour des ressources. Par exemple :
+- **POST /posts** : Crée un nouveau post avec le contenu et l'ID de l'utilisateur fournis.
+- **PATCH /posts/{post_id}** : Met à jour un post existant avec le nouveau contenu fourni.
+
+### Upload de fichiers
+
+Pour les opérations qui nécessitent l'upload de fichiers, nous utilisons le type `UploadFile` de FastAPI. Les fichiers peuvent être inclus dans la requête en tant que paramètres de formulaire avec le type `File`. Par exemple :
+- **POST /posts** : Permet de créer un post et d'uploader des fichiers (images, vidéos, GIFs) associés au post.
+- **PATCH /posts/{post_id}** : Permet de mettre à jour un post existant et d'uploader de nouveaux fichiers associés au post.
+
+### Gestion des fichiers
+
+Lorsqu'un fichier est uploadé, nous vérifions le type MIME du fichier pour nous assurer qu'il est pris en charge avant de le sauvegarder en utilisant un fournisseur de stockage.
