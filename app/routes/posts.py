@@ -5,15 +5,15 @@ from datetime import datetime
 from fastapi import APIRouter, HTTPException, status, UploadFile, Form, File
 from sqlmodel import Session, select
 
-from services.storage import get_storage_provider
-from models.posts import (
+from app.services.storage import get_storage_provider
+from app.models.posts import (
     Post,
     PostCreate,
     PostPublic,
 )
-from models.users import User
-from models.medias import SupportedTypes, Media, MediaPublic
-from database import engine
+from app.models.users import User
+from app.models.medias import SupportedTypes, Media, MediaPublic
+from app.database import engine
 
 router = APIRouter()
 storage_provider = get_storage_provider()

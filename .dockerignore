@@ -1,0 +1,5 @@
+.git*
+**/*.pyc
+.venv/
+dev.db
+static/

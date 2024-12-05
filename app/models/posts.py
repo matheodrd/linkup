@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlmodel import SQLModel, Field, Relationship
 
-from models.medias import Media, MediaPublic
+from app.models.medias import Media, MediaPublic
 
 class PostBase(SQLModel):
     content: str = Field(max_length=2200)

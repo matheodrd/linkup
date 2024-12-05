@@ -4,14 +4,14 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import Session, select
 
-from models.users import (
+from app.models.users import (
     User,
     UserPublic,
     UserCreate,
     UserUpdate,
 )
-from models.posts import Post, PostPublic
-from database import engine
+from app.models.posts import Post, PostPublic
+from app.database import engine
 
 router = APIRouter()
 

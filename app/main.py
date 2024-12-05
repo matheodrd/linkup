@@ -6,9 +6,9 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
-from database_setup import create_db_and_tables
-from routes.users import router as user_router
-from routes.posts import router as post_router
+from app.database_setup import create_db_and_tables
+from app.routes.users import router as user_router
+from app.routes.posts import router as post_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
