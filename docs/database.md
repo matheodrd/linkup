@@ -8,7 +8,6 @@ erDiagram
         UUID id PK
         STRING email
         STRING username
-        STRING azure_id
         STRING bio
         STRING profile_picture
         BOOLEAN is_private
@@ -39,6 +38,4 @@ erDiagram
 
     USER ||--o{ POST : "creates"
     POST ||--o{ MEDIA : "includes"
-    POST ||--o{ COMMENT : "has"
-    USER ||--o{ COMMENT : "writes"
 ```
