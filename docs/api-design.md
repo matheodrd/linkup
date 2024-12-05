@@ -92,3 +92,35 @@ Pour les opérations qui nécessitent l'upload de fichiers, nous utilisons le ty
 ### Gestion des fichiers
 
 Lorsqu'un fichier est uploadé, nous vérifions le type MIME du fichier pour nous assurer qu'il est pris en charge avant de le sauvegarder en utilisant un fournisseur de stockage.
+
+## Réponses aux requêtes
+
+### Structure des réponses
+
+Les réponses aux requêtes de l'API respectent les conventions REST et utilisent les codes de statut HTTP pour indiquer le résultat de l'opération demandée. Chaque réponse contient également des données structurées en JSON pour fournir des informations détaillées sur la ressource concernée.
+
+#### Codes de statut HTTP
+
+- **200 OK** : La requête a été traitée avec succès et la réponse contient les données demandées.
+- **201 Created** : Une nouvelle ressource a été créée avec succès. La réponse contient généralement un lien vers la ressource créée.
+- **204 No Content** : La requête a été traitée avec succès, mais il n'y a pas de contenu à renvoyer.
+- **400 Bad Request** : La requête est mal formée ou les données fournies sont invalides.
+- **404 Not Found** : La ressource demandée n'a pas été trouvée.
+- **500 Internal Server Error** : Une erreur interne au serveur s'est produite.
+
+#### Format des données de réponse
+
+Les données de réponse sont renvoyées au format JSON pour une compatibilité et une lisibilité maximales. Par exemple, une réponse pour récupérer un utilisateur pourrait ressembler à ceci :
+
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "username": "john_doe",
+  "email": "john@example.com",
+  "bio": "Hello, I'm John!",
+  "profile_picture": "http://example.com/images/john.jpg",
+  "is_private": false
+}
+```
+
+Les créations de ressource retournent la ressource fraîchement créée.
