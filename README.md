@@ -1,11 +1,15 @@
 # Link Up 🙌
 
 > [!NOTE]
-> The Link Up project is being developed as part of the 4DESA module, and serves as an assessment project.
+> Le projet Link Up est développé dans le cadre du module 4DESA et sert de projet d'évaluation.
 
-Link Up is a headless social media platform that aims to be a scalable,
- efficient backend system that can be integrated with any front-end interface,
- providing a seamless content management experience
+Link Up est une plateforme de réseaux sociaux qui vise à être un système backend évolutif et efficace pouvant être intégré à n'importe quelle interface frontend, offrant une expérience de gestion de contenu transparente.
+
+## Fonctionnalités
+
+* Gestion des utilisateurs
+* Gestion des posts
+  * Possibilité d'ajouter des médias (images, GIFs et vidéos)
 
 ## Reference API
 
