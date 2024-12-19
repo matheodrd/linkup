@@ -2,6 +2,7 @@ from typing import Sequence
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, status
+from pydantic import parse_obj_as
 from sqlmodel import Session, select
 
 from app.models.users import (
@@ -44,7 +45,7 @@ def read_user(user_id: UUID) -> User:
         return user
 
 @router.get("/users/{user_id}/posts", response_model=Sequence[PostPublic])
-def read_user_posts(user_id: UUID) -> Sequence[Post]:
+def read_user_posts(user_id: UUID) -> Sequence[PostPublic]:
     with Session(engine) as session:
         user = session.get(User, user_id)
         if not user:
@@ -53,7 +54,7 @@ def read_user_posts(user_id: UUID) -> Sequence[Post]:
         statement = select(Post).where(Post.user_id == user_id)
         user_posts = session.exec(statement).all()
 
-        return user_posts
+        return parse_obj_as(Sequence[PostPublic], user_posts)
 
 @router.patch("/users/{user_id}", response_model=UserPublic)
 def update_user(user_id: UUID, user: UserUpdate) -> User:
